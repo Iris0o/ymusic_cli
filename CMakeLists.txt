@@ -4,16 +4,15 @@ project(ymusic_cli)
 
 set(CMAKE_CXX_STANDARD 23)
 
-# httplib
-FetchContent_Declare(httplib
-        GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
-        GIT_TAG v0.21.0)
-FetchContent_MakeAvailable(httplib)
+# cpr
+FetchContent_Declare(cpr
+        GIT_REPOSITORY https://github.com/libcpr/cpr.git
+        GIT_TAG 1.11.2)
+FetchContent_MakeAvailable(cpr)
 
 # miniaudio
 add_library(miniaudio INTERFACE)
 target_include_directories(miniaudio INTERFACE third_party/miniaudio)
-
 
 
 # nlohmann/json
@@ -36,6 +35,6 @@ target_link_libraries(ymusic_cli
         PRIVATE ftxui::dom)
 
 target_link_libraries(ymusic_cli
-        PRIVATE httplib::httplib)
+        PRIVATE cpr::cpr)
 
 target_link_libraries(ymusic_cli PRIVATE miniaudio)
