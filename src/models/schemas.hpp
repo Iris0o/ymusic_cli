@@ -14,15 +14,17 @@
 using json = nlohmann::json;
 
 template <typename T>
-static void get_opt(const json &j, const char *key, std::optional<T> &out) {
-    if (j.contains(key) && !j.at(key).is_null())
+static void get_opt(const json& j, const char* key, std::optional<T>& out) {
+    if (j.contains(key) && !j.at(key).is_null()) {
         out = j.at(key).get<T>();
+    }
 }
 
 template <typename T>
-static void get_if(const json &j, const char *key, T &out) {
-    if (j.contains(key) && !j.at(key).is_null())
+static void get_if(const json& j, const char* key, T& out) {
+    if (j.contains(key) && !j.at(key).is_null()) {
         j.at(key).get_to(out);
+    }
 }
 
 struct InvocationInfo {
@@ -31,7 +33,7 @@ struct InvocationInfo {
     std::string execDurationMillis;
 };
 
-inline void from_json(const json &j, InvocationInfo &v) {
+inline void from_json(const json& j, InvocationInfo& v) {
     get_if(j, "hostname", v.hostname);
     get_if(j, "req-id", v.reqId);
     get_if(j, "exec-duration-millis", v.execDurationMillis);
@@ -43,7 +45,7 @@ struct Cover {
     std::optional<std::string> prefix;
 };
 
-inline void from_json(const json &j, Cover &v) {
+inline void from_json(const json& j, Cover& v) {
     get_if(j, "type", v.type);
     get_if(j, "uri", v.uri);
     get_opt(j, "prefix", v.prefix);
@@ -54,7 +56,7 @@ struct Label {
     std::string name;
 };
 
-inline void from_json(const json &j, Label &v) {
+inline void from_json(const json& j, Label& v) {
     get_if(j, "id", v.id);
     get_if(j, "name", v.name);
 }
@@ -66,7 +68,7 @@ struct ArtistCounts {
     int alsoTracks{};
 };
 
-inline void from_json(const json &j, ArtistCounts &v) {
+inline void from_json(const json& j, ArtistCounts& v) {
     get_if(j, "tracks", v.tracks);
     get_if(j, "directAlbums", v.directAlbums);
     get_if(j, "alsoAlbums", v.alsoAlbums);
@@ -79,7 +81,7 @@ struct ArtistRatings {
     int day{};
 };
 
-inline void from_json(const json &j, ArtistRatings &v) {
+inline void from_json(const json& j, ArtistRatings& v) {
     get_if(j, "week", v.week);
     get_if(j, "month", v.month);
     get_if(j, "day", v.day);
@@ -92,7 +94,7 @@ struct ArtistLink {
     std::optional<std::string> socialNetwork;
 };
 
-inline void from_json(const json &j, ArtistLink &v) {
+inline void from_json(const json& j, ArtistLink& v) {
     get_if(j, "title", v.title);
     get_if(j, "href", v.href);
     get_if(j, "type", v.type);
@@ -116,7 +118,7 @@ struct ArtistResult {
     std::vector<std::string> regions;
 };
 
-inline void from_json(const json &j, ArtistResult &v) {
+inline void from_json(const json& j, ArtistResult& v) {
     get_if(j, "id", v.id);
     get_if(j, "name", v.name);
     get_if(j, "various", v.various);
@@ -138,7 +140,7 @@ struct Major {
     std::string name;
 };
 
-inline void from_json(const json &j, Major &v) {
+inline void from_json(const json& j, Major& v) {
     get_if(j, "id", v.id);
     get_if(j, "name", v.name);
 }
@@ -148,7 +150,7 @@ struct R128 {
     double tp{};
 };
 
-inline void from_json(const json &j, R128 &v) {
+inline void from_json(const json& j, R128& v) {
     get_if(j, "i", v.i);
     get_if(j, "tp", v.tp);
 }
@@ -160,7 +162,7 @@ struct Fade {
     double outStop{};
 };
 
-inline void from_json(const json &j, Fade &v) {
+inline void from_json(const json& j, Fade& v) {
     get_if(j, "inStart", v.inStart);
     get_if(j, "inStop", v.inStop);
     get_if(j, "outStart", v.outStart);
@@ -174,7 +176,7 @@ struct DerivedColors {
     std::string accent;
 };
 
-inline void from_json(const json &j, DerivedColors &v) {
+inline void from_json(const json& j, DerivedColors& v) {
     get_if(j, "average", v.average);
     get_if(j, "waveText", v.waveText);
     get_if(j, "miniPlayer", v.miniPlayer);
@@ -186,7 +188,7 @@ struct LyricsInfo {
     bool hasAvailableTextLyrics{};
 };
 
-inline void from_json(const json &j, LyricsInfo &v) {
+inline void from_json(const json& j, LyricsInfo& v) {
     get_if(j, "hasAvailableSyncLyrics", v.hasAvailableSyncLyrics);
     get_if(j, "hasAvailableTextLyrics", v.hasAvailableTextLyrics);
 }
@@ -196,7 +198,7 @@ struct TrackPosition {
     int index{};
 };
 
-inline void from_json(const json &j, TrackPosition &v) {
+inline void from_json(const json& j, TrackPosition& v) {
     get_if(j, "volume", v.volume);
     get_if(j, "index", v.index);
 }
@@ -230,7 +232,7 @@ struct Album {
     std::optional<std::vector<std::string>> availableRegions;
 };
 
-inline void from_json(const json &j, Album &v) {
+inline void from_json(const json& j, Album& v) {
     get_if(j, "id", v.id);
     get_if(j, "title", v.title);
     get_if(j, "type", v.type);
@@ -245,8 +247,9 @@ inline void from_json(const json &j, Album &v) {
     get_if(j, "veryImportant", v.veryImportant);
     get_if(j, "artists", v.artists);
     if (j.contains("labels") && !j.at("labels").empty() &&
-        j.at("labels")[0].is_object())
+        j.at("labels")[0].is_object()) {
         j.at("labels").get_to(v.labels);
+    }
     get_if(j, "available", v.available);
     get_if(j, "availableForPremiumUsers", v.availableForPremiumUsers);
     get_if(j, "availableForOptions", v.availableForOptions);
@@ -297,7 +300,7 @@ struct Track {
     std::vector<std::string> regions;
 };
 
-inline void from_json(const json &j, Track &v) {
+inline void from_json(const json& j, Track& v) {
     get_if(j, "id", v.id);
     get_if(j, "realId", v.realId);
     get_if(j, "title", v.title);
@@ -341,7 +344,7 @@ struct TracksPage {
     std::vector<Track> results;
 };
 
-inline void from_json(const json &j, TracksPage &v) {
+inline void from_json(const json& j, TracksPage& v) {
     get_if(j, "total", v.total);
     get_if(j, "perPage", v.perPage);
     get_if(j, "order", v.order);
@@ -355,7 +358,7 @@ struct ArtistsPage {
     std::vector<ArtistResult> results;
 };
 
-inline void from_json(const json &j, ArtistsPage &v) {
+inline void from_json(const json& j, ArtistsPage& v) {
     get_if(j, "total", v.total);
     get_if(j, "perPage", v.perPage);
     get_if(j, "order", v.order);
@@ -369,7 +372,7 @@ struct AlbumsPage {
     std::vector<Album> results;
 };
 
-inline void from_json(const json &j, AlbumsPage &v) {
+inline void from_json(const json& j, AlbumsPage& v) {
     get_if(j, "total", v.total);
     get_if(j, "perPage", v.perPage);
     get_if(j, "order", v.order);
@@ -381,16 +384,18 @@ struct Best {
     std::variant<ArtistResult, Track, Album> result;
 };
 
-inline void from_json(const json &j, Best &v) {
+inline void from_json(const json& j, Best& v) {
     get_if(j, "type", v.type);
-    if (!j.contains("result"))
+    if (!j.contains("result")) {
         return;
-    if (v.type == "artist")
+    }
+    if (v.type == "artist") {
         v.result = j.at("result").get<ArtistResult>();
-    else if (v.type == "track")
+    } else if (v.type == "track") {
         v.result = j.at("result").get<Track>();
-    else
+    } else {
         v.result = j.at("result").get<Album>();
+    }
 }
 
 struct SearchResult {
@@ -405,7 +410,7 @@ struct SearchResult {
     std::optional<AlbumsPage> albums;
 };
 
-inline void from_json(const json &j, SearchResult &v) {
+inline void from_json(const json& j, SearchResult& v) {
     get_if(j, "misspellCorrected", v.misspellCorrected);
     get_if(j, "nocorrect", v.nocorrect);
     get_if(j, "searchRequestId", v.searchRequestId);
@@ -422,9 +427,9 @@ struct SearchResponse {
     SearchResult result;
 };
 
-inline void from_json(const json &j, SearchResponse &v) {
+inline void from_json(const json& j, SearchResponse& v) {
     get_if(j, "invocationInfo", v.invocationInfo);
     get_if(j, "result", v.result);
 }
 
-#endif // YMUSIC_CLI_SCHEMAS_HPP
+#endif  // YMUSIC_CLI_SCHEMAS_HPP
