@@ -305,7 +305,8 @@ inline void from_json(const json &j, Track &v) {
     get_if(j, "major", v.major);
     get_if(j, "available", v.available);
     get_if(j, "availableForPremiumUsers", v.availableForPremiumUsers);
-    get_if(j, "availableFullWithoutPermission", v.availableFullWithoutPermission);
+    get_if(j, "availableFullWithoutPermission",
+           v.availableFullWithoutPermission);
     get_if(j, "availableForOptions", v.availableForOptions);
     get_if(j, "disclaimers", v.disclaimers);
     get_if(j, "storageDir", v.storageDir);
@@ -382,7 +383,8 @@ struct Best {
 
 inline void from_json(const json &j, Best &v) {
     get_if(j, "type", v.type);
-    if (!j.contains("result")) return;
+    if (!j.contains("result"))
+        return;
     if (v.type == "artist")
         v.result = j.at("result").get<ArtistResult>();
     else if (v.type == "track")

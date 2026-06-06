@@ -5,9 +5,6 @@
 #ifndef YMUSIC_CLI_SEARCH_HPP
 #define YMUSIC_CLI_SEARCH_HPP
 
-#include "../models/schemas.hpp"
-#include "ftxui/component/event.hpp"
-#include "ftxui/util/ref.hpp"
 #include <cpr/cpr.h>
 #include <ftxui/component/component.hpp>
 #include <ftxui/component/component_options.hpp>
@@ -17,16 +14,19 @@
 #include <string>
 #include <thread>
 #include <vector>
+#include "../models/schemas.hpp"
+#include "ftxui/component/event.hpp"
+#include "ftxui/util/ref.hpp"
 
 namespace ui {
 using namespace ftxui;
 using json = nlohmann::json;
 
-void SearchScreen(const std::string &token) {
+void SearchScreen(const std::string& token) {
     // --- общее состояние ---
     std::string search_query;
     std::vector<Track> results;
-    std::vector<std::string> entries; // строки для Menu, синхронны с results
+    std::vector<std::string> entries;  // строки для Menu, синхронны с results
     int selected = 0;
     bool loading = false;
     std::string error_msg;
@@ -40,7 +40,7 @@ void SearchScreen(const std::string &token) {
     Component menu = Menu(&entries, &selected, menu_option);
 
     // Enter в поле ввода → HTTP-запрос в фоне
-    input |= CatchEvent([&](const Event &event) {
+    input |= CatchEvent([&](const Event& event) {
         if (event == Event::Return && !loading && !search_query.empty()) {
             loading = true;
             results.clear();
@@ -72,7 +72,7 @@ void SearchScreen(const std::string &token) {
                         from_json(json::parse(res.text), response);
                         results = response.result.tracks.value_or({}).results;
 
-                        for (const auto &track : results) {
+                        for (const auto& track : results) {
                             std::string artist =
                                 track.artists.empty()
                                     ? "неизвестен"
@@ -81,7 +81,7 @@ void SearchScreen(const std::string &token) {
                                 track.title + " — " + artist + " [" +
                                 std::to_string(track.durationMs / 1000) + "с]");
                         }
-                    } catch (const std::exception &e) {
+                    } catch (const std::exception& e) {
                         error_msg = std::string("Ошибка парсинга: ") + e.what();
                     }
                 });
@@ -113,6 +113,6 @@ void SearchScreen(const std::string &token) {
     screen.Loop(renderer);
 }
 
-} // namespace ui
+}  // namespace ui
 
-#endif // YMUSIC_CLI_SEARCH_HPP
+#endif  // YMUSIC_CLI_SEARCH_HPP
